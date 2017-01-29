@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "games": {
+      ".validate": "auth !== null",
+      "$gameId": {
+        ".read": "data.child('status/players').child(auth.uid).exists()",
+        ".validate": "data.child('status/players').child(auth.uid).exists()",
+        "status": {
+          ".write": false,
+        },
+        "moves": {
+          "$moveId": {
+            ".write": "!data.exists()",
+            ".validate": "newData.hasChildren(['uid','num','moveInfo'])",
+            "uid": {
+              ".validate": "newData.val() === auth.uid"
+            }
+          }
+        }
+      }
+    }
+  }
+}
