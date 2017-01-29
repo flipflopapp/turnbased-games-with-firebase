@@ -1,6 +1,6 @@
 # twoplayer-firebase-js
 
-I plan to use this module to implement a chess variation - [HalfChess](!www.halfchess.com).
+I plan to use this module to implement a chess variation - [HalfChess](https://www.halfchess.com).
 
 This is the first implementation and has a client.js module (supposed to run on the browser) and a server.js module (supposed to be used from the backend).
 
