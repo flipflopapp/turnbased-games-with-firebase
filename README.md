@@ -1,6 +1,6 @@
 # twoplayer-firebase-js
 
-I plan to use this module to implement two player games in a game (Halchess)[!www.halfchess.com].
+I plan to use this module to implement a chess variation - [HalfChess](!www.halfchess.com).
 
 This is the first implementation and has a client.js module (supposed to run on the browser) and a server.js module (supposed to be used from the backend).
 
@@ -11,3 +11,5 @@ The users are authenticated with anonymous method and the token is passed back t
 I plan to add more information in coming days. 
 
 Please feel free to reach out meanwhile on twitter @navalsaini for any queries, discussions or ideas.
+
+Also feel free to forkit and create variations for your usecases. 
