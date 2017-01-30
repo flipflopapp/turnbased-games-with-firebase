@@ -87,7 +87,6 @@ describe('Two player tests', () => {
       .catch(done);
     })
 
-    /*
     it('4002: should end the game', done => {
       const gameId = testData.gameId;
       server.endGame(gameId, "user-0001")
@@ -99,7 +98,6 @@ describe('Two player tests', () => {
       })
       .catch(done);
     })
-    */
 
   })
 })
@@ -107,7 +105,7 @@ describe('Two player tests', () => {
 // Test data
 
 let testDataFile = 'test/test.json';
-let testData;
+let testData = {};
 
 function readData(done) {
   fs.readFile(testDataFile, (err, data) => {

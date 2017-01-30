@@ -70,7 +70,10 @@ module.exports.makeMove = function(gid, uid, num, moveInfo) {
     const movesRef = db.ref('games/' + gid + '/moves');
     let ref = movesRef.push();
     ref.set({
-      uid, num, moveInfo,
+      uid,
+      num,
+      moveInfo,
+      createdAt: firebase.database.ServerValue.TIMESTAMP,
     }, error => {
       if(error) {
         reject(error);

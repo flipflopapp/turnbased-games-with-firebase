@@ -1,11 +1,11 @@
 /*
  * Server side:
- * This module uses firebase realtime database
+ * This module uses fireAdmin realtime database
  * for establishing a two player game between
  * players.
  */
 
-const admin = require("firebase-admin");
+const fireAdmin = require("firebase-admin");
 const debug = require("debug")("firebase-server");
 
 /*
@@ -13,20 +13,20 @@ const debug = require("debug")("firebase-server");
  *   - apiKey, authDomain, databaseUrl, storageBucket
  */
 exports.initialize = function(databaseURL, serviceAccount) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+  fireAdmin.initializeApp({
+    credential: fireAdmin.credential.cert(serviceAccount),
     databaseURL
   });
 }
 
   // returns a customToken that has to be used by the user
 exports.authUser = function(uid) {
-  return admin.auth().createCustomToken(uid);
+  return fireAdmin.auth().createCustomToken(uid);
 }
 
 exports.createGame = function(uid, gameInfo) {
   return (new Promise((resolve, reject) => {
-    let gameRef = admin.database().ref('games').push();
+    let gameRef = fireAdmin.database().ref('games').push();
     gameRef.set({
       "status": {
         "state": "CREATED",
@@ -34,7 +34,7 @@ exports.createGame = function(uid, gameInfo) {
         "players": {
           [uid]: true
         },
-        "createdAt": Date.now(),
+        "createdAt": fireAdmin.database.ServerValue.TIMESTAMP,
         "startedAt": null,
         "endedAt": null,
         "winner": null,
@@ -53,7 +53,7 @@ exports.joinGame = function(gid, uid) {
   return (new Promise((resolve, reject) => {
     //console.log("Before-Transaction " + gid + "/status");
     const gameStatusPath = "games/" + gid + "/status";
-    let statusRef = admin.database().ref(gameStatusPath);
+    let statusRef = fireAdmin.database().ref(gameStatusPath);
     statusRef.transaction(
       function(status) {
         //console.log('Inside-Transaction');
@@ -61,7 +61,7 @@ exports.joinGame = function(gid, uid) {
           if (!status.players[uid]) { // not already joined
             status.players[uid] = true;
             status.state = "BOTH_JOINED";
-            status.startedAt = Date.now();
+            status.startedAt = fireAdmin.database.ServerValue.TIMESTAMP;
           }
         }
         return status;
@@ -85,14 +85,14 @@ exports.endGame = function (gid, uid) {
   return (new Promise((resolve, reject) => {
     //console.log("Before-Transaction " + gid + "/status");
     const gameStatusPath = "games/" + gid + "/status";
-    let statusRef = admin.database().ref(gameStatusPath);
+    let statusRef = fireAdmin.database().ref(gameStatusPath);
     statusRef.transaction(
       function(status) {
         //console.log('Inside-Transaction');
         if (status !== null && status.state === "BOTH_JOINED") {
           if (status.players[uid]) {
             status.state = "COMPLETED";
-            status.endedAt = Date.now();
+            status.endedAt = fireAdmin.database.ServerValue.TIMESTAMP;
           }
         }
         return status;
@@ -115,7 +115,7 @@ exports.endGame = function (gid, uid) {
 exports.getGameStatus = function(gid) {
   return (new Promise((resolve, reject) => {
     const gameStatusPath = "games/" + gid + "/status";
-    let statusRef = admin.database().ref(gameStatusPath);
+    let statusRef = fireAdmin.database().ref(gameStatusPath);
     statusRef.on("value",
       snapshot => {
         const data = snapshot.val();
@@ -135,7 +135,7 @@ exports.getGameStatus = function(gid) {
 
 exports.dumpAllGames = function () {
   return (new Promise((resolve) => {
-    const ref = admin.database().ref("games");
+    const ref = fireAdmin.database().ref("games");
     ref.once('value', snapshot => {
       snapshot.forEach(data => {
         console.log(data.key);

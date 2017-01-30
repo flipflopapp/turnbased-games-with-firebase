@@ -6,7 +6,7 @@
         ".read": "data.child('status/players').child(auth.uid).exists()",
         ".validate": "data.child('status/players').child(auth.uid).exists()",
         "status": {
-          ".write": false,
+          ".write": false
         },
         "moves": {
           "$moveId": {
@@ -14,6 +14,9 @@
             ".validate": "newData.hasChildren(['uid','num','moveInfo'])",
             "uid": {
               ".validate": "newData.val() === auth.uid"
+            },
+            "createdAt": {
+              ".validate": "newData.val() === now"
             }
           }
         }

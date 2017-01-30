@@ -42,7 +42,7 @@ describe(`Two player tests : ${gameId} : ${uid}`, () => {
     }
 
     function receiveMove(move) {
-      console.log('received move', move.moveInfo);
+      console.log('received move', move);
       makeMove();
     }
 

@@ -1,8 +1,9 @@
 {
   "name": "turnbased",
   "version": "1.0.0",
-  "description": "",
+  "description": "Turn based game (currently two players) with firebase (example chess)",
   "scripts": {
+    "test": "./test/test-match.sh",
     "test-server": "mocha test/server.js --no-timeouts",
     "test-client": "mocha test/client.js --no-timeouts",
     "start": "node server.js"
