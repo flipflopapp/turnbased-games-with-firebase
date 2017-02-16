@@ -1,0 +1,11 @@
+{
+  "name": "turnbased",
+  "version": "1.0.0",
+  "description": "Client side for turn based game (currently two players) with firebase (example chess)",
+  "main": "index.js",
+  "author": "Naval Saini <navalnovel@gmail.com>",
+  "license": "ISC",
+  "peerDependencies": {
+    "firebase": "^3.6.7"
+  }
+}
